@@ -63,6 +63,7 @@ public class MerchantPage {
     private final By CloseBtn = By.id("closeButton");
 
     private final By SuccessMsg = By.xpath("(//div[contains(text(),'Success !')])[1]");
+    private final By AlreadyExistMsg = By.xpath("(//div[contains(text(),'Mid is already taken')])[1]");
 
     private final By nameTxt = By.id("name-text");
     private final By midTxt = By.id("merchantId-text");
@@ -436,6 +437,9 @@ public class MerchantPage {
     }
     public boolean iaVisibleMDR(){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(mdrTxt)).isDisplayed();
+    }
+    public boolean isVisibleExistMsg(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(AlreadyExistMsg)).isDisplayed();
     }
 
 

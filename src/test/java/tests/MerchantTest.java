@@ -952,6 +952,83 @@ public class MerchantTest extends BaseTest {
         driver.quit();
     }
 
+    @Test(priority = 7)
+    public void Exist_Data_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Already exist Name Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.ClickMerchantCreateIcon();
+        extentTest.get().info("Click on the merchant create icon");
+
+        MerchantPage.MerchantCreate("AutomationMerchant", "11222211212", "jayoda@gmail.com", "0777777777", "hill street, Dehiwala", "1", "1", extentTest.get());
+        extentTest.get().info("spaced name field");
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click INSERT");
+
+        String value = MerchantPage.getDeleteErrorMessage();
+
+        boolean isVisible2 = false;
+
+        try {
+            isVisible2 = MerchantPage.isVisibleSuccessMsg();
+            if (isVisible2) {
+                extentTest.get().pass("<span style='color:blue'>"+value+"</span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P7_MC_Exist_NameField");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed: " + value + "</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Already exist merchant ID Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.ClickMerchantCreateIcon();
+        extentTest.get().info("Click on the merchant create icon");
+
+        MerchantPage.MerchantCreate("AutomationMerchant", "2221111222", "jayoda@gmail.com", "0777777777", "hill street, Dehiwala", "1", "1", extentTest.get());
+        extentTest.get().info("spaced name field");
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click INSERT");
+
+        String value1 = MerchantPage.getDeleteErrorMessage();
+
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = MerchantPage.isVisibleExistMsg();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color:red'>"+value1+"</span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P7_MC_exist_MidField");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed: " + value1 + "</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        driver.quit();
+
+    }
 
 }
 
