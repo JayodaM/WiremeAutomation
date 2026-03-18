@@ -517,7 +517,6 @@ public class MerchantTest extends BaseTest {
         extentTest.get().info("Navigate to the Merchant function");
         MerchantPage.ClickMerchantCreateIcon();
 
-
         MerchantPage.contactField("         ", extentTest.get());
         extentTest.get().info("Entered spaced contact number");
 
@@ -839,7 +838,147 @@ public class MerchantTest extends BaseTest {
         }else{
             extentTest.get().pass("<span style='color: green;'>Only numeric values are allowed in the MDR number field</span>");
         }
-    driver.quit();
+
+    restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Adding minus value for merchant ID Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.ClickMerchantCreateIcon();
+
+        MerchantPage.MerchantCreate("Test Automation 2","-1234567897","jayoda@gmail.com","0777777777","hill street, Dehiwala","1","1",extentTest.get());
+        extentTest.get().info("Added (-) minus value for the merchant ID");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click INSERT");
+
+        String getValue = MerchantPage.getDeleteErrorMessage();
+
+        boolean isVisible1 = false;
+
+        try {
+            isVisible1 = MerchantPage.iaVisibleMid();
+            if (isVisible1) {
+                extentTest.get().pass("<span style='color:red'>Invalid MID:</span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P5_MC_Minus_MID");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :" + getValue + " </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Adding minus value for contact number Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.ClickMerchantCreateIcon();
+
+        MerchantPage.MerchantCreate("Test Automation 2","1234567898","jayoda@gmail.com","-077777777","hill street, Dehiwala","1","1",extentTest.get());
+        extentTest.get().info("Added (-) minus value for the merchant ID");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click INSERT");
+
+        boolean isVisible2 = false;
+
+        try {
+            isVisible2 = MerchantPage.iaVisibleContact();
+            if (isVisible2) {
+                extentTest.get().pass("<span style='color:red'>Invalid contact number. Format - 0XX XXX XX XX:</span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P5_MC_Minus_Contact");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed : </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Adding minus value for Radius number Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.ClickMerchantCreateIcon();
+
+        MerchantPage.MerchantCreate("Test Automation 2","1234567899","jayoda@gmail.com","0777777777","hill street, Dehiwala","-1","1",extentTest.get());
+        extentTest.get().info("Added (-) minus value for the radius");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click INSERT");
+
+        String getValue2 = MerchantPage.getDeleteErrorMessage();
+
+        boolean isVisible3 = false;
+
+        try {
+            isVisible3 = MerchantPage.iaVisibleRadius();
+            if (isVisible3) {
+                extentTest.get().pass("<span style='color:red'>Invalid radius</span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P5_MC_Minus_Radius");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :"+getValue2+" </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Adding minus value for MDR number Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.ClickMerchantCreateIcon();
+
+        MerchantPage.MerchantCreate("Test Automation 2","1234567890","jayoda@gmail.com","0777777777","hill street, Dehiwala","1","-1",extentTest.get());
+        extentTest.get().info("Added (-) minus value for the mdr");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click INSERT");
+
+
+        boolean isVisible4 = false;
+
+        try {
+            isVisible4 = MerchantPage.iaVisibleMDR();
+            if (isVisible4) {
+                extentTest.get().pass("<span style='color:red'>Invalid MDR</span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P5_MC_Minus_MDR");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed : </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+
     }
 
     @Test(priority = 6)
@@ -1027,6 +1166,34 @@ public class MerchantTest extends BaseTest {
         }
 
         driver.quit();
+
+    }
+
+    @Test(priority = 8)
+    public void Numeric_Filed_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Minus val Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.ClickMerchantCreateIcon();
+        extentTest.get().info("Click on the merchant create icon");
+
+        MerchantPage.MerchantCreate("AutomationMerchant", "-5555555", "jayoda@gmail.com", "0777777777", "hill street, Dehiwala", "1", "1", extentTest.get());
+        extentTest.get().info("spaced name field");
+
+
+
+
+
+
+
+
 
     }
 
