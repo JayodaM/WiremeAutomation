@@ -3,6 +3,7 @@ package tests;
 import base.BaseTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import org.openqa.selenium.TimeoutException;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.MerchantPage;
@@ -1170,9 +1171,9 @@ public class MerchantTest extends BaseTest {
     }
 
     @Test(priority = 8)
-    public void Numeric_Filed_Verification() {
+    public void Max_Digit_Fields_Verification() {
 
-        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Minus val Verification</span>");
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Max digit in name field Verification</span>");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("jayoda", "00000000", extentTest.get());
 
@@ -1184,19 +1185,302 @@ public class MerchantTest extends BaseTest {
         MerchantPage.ClickMerchantCreateIcon();
         extentTest.get().info("Click on the merchant create icon");
 
-        MerchantPage.MerchantCreate("AutomationMerchant", "-5555555", "jayoda@gmail.com", "0777777777", "hill street, Dehiwala", "1", "1", extentTest.get());
-        extentTest.get().info("spaced name field");
+        String longName = "a".repeat(60);
+
+        MerchantPage.MerchantCreate(longName, "123321456654", "jayoda@gmail.com", "0777777777", "hill street, Dehiwala", "1", "1", extentTest.get());
+        extentTest.get().info("<span style= 'font-style: italic; color: blue'> Entered more than 50 digits in name field</span>");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click INSERT");
+
+        String value1 = MerchantPage.getDeleteErrorMessage();
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = MerchantPage.iaVisibleName();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color:red'>"+value1+"</span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P8_MC_NameField");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed: " + value1 + "</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Max digit in MID field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.ClickMerchantCreateIcon();
+        extentTest.get().info("Click on the merchant create icon");
+
+        String longMID = "1".repeat(16); // more than 15 digits
+
+        MerchantPage.MIDField(longMID, extentTest.get());
+
+// Get entered value from page
+        String enteredValue = MerchantPage.getMIDFieldValue();
+        boolean isValid = false;
+        try {
+            if (enteredValue.length() <= 15) {
+                isValid = true;
+            }
+            if (isValid) {
+                extentTest.get().pass("<span style='color:green;'>System restricted MID to 15 digits. Test Passed</span>");
+            } else {
+                extentTest.get().fail("<span style='color:red;'>System allowed more than 15 digits. Test Failed</span>");
+            }
+        } catch (Exception e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "MID_Length_Validation");
+
+            extentTest.get().fail(
+                    "<span style='color:red;'>Exception occurred during MID validation</span>");
+            extentTest.get().fail(e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Max digit in Radius  field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.ClickMerchantCreateIcon();
+        extentTest.get().info("Click on the merchant create icon");
+
+        String longRadius = "5".repeat(30);
+
+        MerchantPage.MerchantCreate("Test Automation", "123321456654", "jayoda@gmail.com", "0777777777", "hill street, Dehiwala", longRadius, "1", extentTest.get());
+        extentTest.get().info("<span style= 'font-style: italic; color: blue'> Entered more than 20 digits in radius field</span>");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click INSERT");
+
+        String value3 = MerchantPage.getDeleteErrorMessage();
+
+        boolean isVisible3 = false;
+
+        try {
+            isVisible3 = MerchantPage.isVisibleRadiusInvalidMsg();
+            if (isVisible3) {
+                extentTest.get().pass("<span style='color:red' >"+value3+ "</span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P8_MC_RadiusField");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed: " + value3 + "</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
 
 
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Max digit in MDR field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.ClickMerchantCreateIcon();
+        extentTest.get().info("Click on the merchant create icon");
 
 
+        MerchantPage.MerchantCreate("Test Automation", "123321456654", "jayoda@gmail.com", "0777777777", "hill street, Dehiwala", "10", "1000", extentTest.get());
+        extentTest.get().info("<span style= 'font-style: italic; color: blue'> Entered invalid MDR percentage</span>");
 
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click INSERT");
 
+        boolean isVisible4 = false;
 
+        try {
+            isVisible4 = MerchantPage.iaVisibleRadius();
+            if (isVisible4) {
+                extentTest.get().pass("<span style='color:red' >MDR percentage should be less than 10%</span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P8_MC_MDRField");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed: " + value3 + "</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
 
+    @Test(priority = 9)
+    public void Cancel_Button_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Cancel button Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.ClickMerchantCreateIcon();
+        extentTest.get().info("Click on the merchant create icon");
+        MerchantPage.CloseBtn();
+        extentTest.get().info("CLick CLOSE");
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = MerchantPage.isVisibleEditIcon();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P9_MC_MDRField");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed:</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
 
     }
 
+    // -----------✅ Merchant update--------
+
+    @Test(priority = 10)
+    public void Update_Forum_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update forum Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = MerchantPage.IsVisibleInsertIcon();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color:Green'> Update forum was displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: update forum was not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P10_MU_UpdateForum");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed:</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+
+    @Test(priority = 11)
+    public void Update_Merchant_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update forum Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("Update Automation","00007777","wmj@gmail.com","0777444499","Kragampitiya, Dehiwala","20","3",extentTest.get());
+        extentTest.get().info("Update forum filled with valid data");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        String actual = MerchantPage.getDeleteErrorMessage();
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = MerchantPage.isVisibleSuccessMsg();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color:Green'><b>Actual message:</b> " + actual + "</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed:  "+ actual +"</span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P11_MU_Happy_Path");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  "+actual+"</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+    }
+
+    @Test(priority = 12)
+    public void Update_with_Empty_Fields_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update forum Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateEmptyMerchant();
+        extentTest.get().info("Cleared the update forum");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = MerchantPage.isVisibleUpdateTxtMessages();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color:red'>name is required:<br> \n" +
+                        "Merchant ID is required.<br>\n" +
+                        "Email is required.<br>\n" +
+                        "Contact number is required.<br>" +
+                        "Address is required.<br>\n" +
+                        "Radius is required.<br>\n" +
+                        "MDR is required</span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P12_MU_Empty_fields");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        
+
+
+    }
 }
 
 

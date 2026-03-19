@@ -64,6 +64,7 @@ public class MerchantPage {
 
     private final By SuccessMsg = By.xpath("(//div[contains(text(),'Success !')])[1]");
     private final By AlreadyExistMsg = By.xpath("(//div[contains(text(),'Mid is already taken')])[1]");
+    private final By RadiusInvalid = By.xpath("(//div[contains(text(),'\"radius\" must be a safe number')])[1]");
 
     private final By nameTxt = By.id("name-text");
     private final By midTxt = By.id("merchantId-text");
@@ -357,11 +358,13 @@ public class MerchantPage {
     }
     public void MIDField(String mid, ExtentTest test){
         wait.until(ExpectedConditions.visibilityOfElementLocated(MID)).sendKeys(mid);
-        test.info("Entered MID: "+ mid);
+        test.info("Entered MID: " + mid);
     }
+
     public String getMIDFieldValue(){
         return driver.findElement(MID).getAttribute("value");
     }
+
     public void RadiusField(String radius, ExtentTest test){
         wait.until(ExpectedConditions.visibilityOfElementLocated(Radius)).sendKeys(radius);
         test.info("Entered MID: "+ radius);
@@ -376,10 +379,6 @@ public class MerchantPage {
     public String getMDRvalue(){
         return driver.findElement(MDR).getAttribute("value");
     }
-
-
-
-
     public boolean IsVisibleInsertIcon(){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(InsertBtn)).isDisplayed();
     }
@@ -440,6 +439,135 @@ public class MerchantPage {
     }
     public boolean isVisibleExistMsg(){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(AlreadyExistMsg)).isDisplayed();
+    }
+    public boolean isVisibleRadiusInvalidMsg(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(RadiusInvalid)).isDisplayed();
+    }
+
+    // -----------✅ Merchant update--------
+
+
+    private final By PartnerS = By.xpath("(//li[normalize-space()='ndcsd b'])[1]");
+    private final By ProvinceP = By.xpath("(//li[normalize-space()='Central'])[1]");
+    private final By DistrictT = By.xpath("(//li[normalize-space()='Kandy'])[1]");
+    private final By MCCM = By.xpath("(//li[normalize-space()='8291 - nm'])[1]");
+
+
+    public void UpdateMerchant(String name,String Mid, String Email,String contact, String address, String radius, String MDRPercentage , ExtentTest test) {
+
+        WebElement MName = wait.until(ExpectedConditions.visibilityOfElementLocated(Name));
+        MName.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        MName.sendKeys(Keys.DELETE);
+        MName.sendKeys(name);
+        test.info("Entered name: " + name);
+
+        WebElement MerchantID = wait.until(ExpectedConditions.visibilityOfElementLocated(MID));
+        MerchantID.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        MerchantID.sendKeys(Keys.DELETE);
+        MerchantID.sendKeys(Mid);
+        test.info("Entered MID: " + Mid);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(Partner)).click();
+        WebElement PartnerSelect = wait.until(ExpectedConditions.visibilityOfElementLocated(PartnerS));
+        String PartnerTxt = PartnerSelect.getText();
+        PartnerSelect.click();
+        test.info("Selected partner: "+ PartnerTxt);
+
+        WebElement emailAddress = wait.until(ExpectedConditions.visibilityOfElementLocated(email));
+        emailAddress.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        emailAddress.sendKeys(Keys.DELETE);
+        emailAddress.sendKeys(Email);
+        test.info("Entered email address: " + Email);
+
+        WebElement ContactNum = wait.until(ExpectedConditions.visibilityOfElementLocated(Contact));
+        ContactNum.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        ContactNum.sendKeys(Keys.DELETE);
+        ContactNum.sendKeys(contact);
+        test.info("Entered contact number: " + contact);
+
+        WebElement AddressMID = wait.until(ExpectedConditions.visibilityOfElementLocated(Address));
+        AddressMID.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        AddressMID.sendKeys(Keys.DELETE);
+        AddressMID.sendKeys(address);
+        test.info("Entered address: " + address);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(Province)).click();
+        WebElement ProvinceSelect = wait.until(ExpectedConditions.visibilityOfElementLocated(ProvinceP));
+        String ProvinceTxt = ProvinceSelect.getText();
+        ProvinceSelect.click();
+        test.info("Selected Province: "+ ProvinceTxt);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(District)).click();
+        WebElement DistrictSelect = wait.until(ExpectedConditions.visibilityOfElementLocated(DistrictT));
+        String DistrictTxt = DistrictSelect.getText();
+        DistrictSelect.click();
+        test.info("Selected District: "+ DistrictTxt);
+
+        WebElement RadiusS = wait.until(ExpectedConditions.visibilityOfElementLocated(Radius));
+        RadiusS.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        RadiusS.sendKeys(Keys.DELETE);
+        RadiusS.sendKeys(radius);
+        test.info("Entered Radius: " + radius);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(MCC)).click();
+        WebElement MCCSelect = wait.until(ExpectedConditions.visibilityOfElementLocated(MCCM));
+        String MCCTxt = MCCSelect.getText();
+        MCCSelect.click();
+        test.info("Selected MCC: "+ MCCTxt);
+
+        WebElement MDRP = wait.until(ExpectedConditions.visibilityOfElementLocated(MDR));
+        MDRP.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        MDRP.sendKeys(Keys.DELETE);
+        MDRP.sendKeys(MDRPercentage);
+        test.info("Entered MDR percentage: " + MDRPercentage);
+
+    }
+    public void UpdateEmptyMerchant() {
+
+        WebElement MName = wait.until(ExpectedConditions.visibilityOfElementLocated(Name));
+        MName.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        MName.sendKeys(Keys.DELETE);
+
+        WebElement MerchantID = wait.until(ExpectedConditions.visibilityOfElementLocated(MID));
+        MerchantID.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        MerchantID.sendKeys(Keys.DELETE);
+
+        WebElement emailAddress = wait.until(ExpectedConditions.visibilityOfElementLocated(email));
+        emailAddress.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        emailAddress.sendKeys(Keys.DELETE);
+
+        WebElement ContactNum = wait.until(ExpectedConditions.visibilityOfElementLocated(Contact));
+        ContactNum.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        ContactNum.sendKeys(Keys.DELETE);
+
+        WebElement AddressMID = wait.until(ExpectedConditions.visibilityOfElementLocated(Address));
+        AddressMID.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        AddressMID.sendKeys(Keys.DELETE);
+
+        WebElement RadiusS = wait.until(ExpectedConditions.visibilityOfElementLocated(Radius));
+        RadiusS.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        RadiusS.sendKeys(Keys.DELETE);
+
+        WebElement MDRP = wait.until(ExpectedConditions.visibilityOfElementLocated(MDR));
+        MDRP.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        MDRP.sendKeys(Keys.DELETE);
+
+    }
+
+    public void UpdateIcon(){
+        wait.until(ExpectedConditions.elementToBeClickable(EditIcon)).click();
+    }
+    public boolean isVisibleUpdateTxtMessages(){
+        boolean name = wait.until(ExpectedConditions.visibilityOfElementLocated(nameTxt)).isDisplayed();
+        boolean mid = wait.until(ExpectedConditions.visibilityOfElementLocated(midTxt)).isDisplayed();
+        boolean email = wait.until(ExpectedConditions.visibilityOfElementLocated(emailTxt)).isDisplayed();
+        boolean contact = wait.until(ExpectedConditions.visibilityOfElementLocated(contactTxt)).isDisplayed();
+        boolean address = wait.until(ExpectedConditions.visibilityOfElementLocated(addressTxt)).isDisplayed();
+        boolean radius = wait.until(ExpectedConditions.visibilityOfElementLocated(radiusTxt)).isDisplayed();
+        boolean mdr = wait.until(ExpectedConditions.visibilityOfElementLocated(mdrTxt)).isDisplayed();
+
+        return name && mid && email && contact && address && radius && mdr;
+
     }
 
 
