@@ -113,7 +113,7 @@ public class MerchantTest extends BaseTest {
             extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  "+actual+"</span>");
             extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
         }
-
+        driver.quit();
     }
     @Test(priority = 4)
     public void Empty_Fields_Verification() {
@@ -1397,7 +1397,7 @@ public class MerchantTest extends BaseTest {
     @Test(priority = 11)
     public void Update_Merchant_Verification() {
 
-        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update forum Verification</span>");
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update Verification</span>");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("jayoda", "00000000", extentTest.get());
 
@@ -1432,12 +1432,13 @@ public class MerchantTest extends BaseTest {
             extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  "+actual+"</span>");
             extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
         }
+        driver.quit();
     }
 
     @Test(priority = 12)
     public void Update_with_Empty_Fields_Verification() {
 
-        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update forum Verification</span>");
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update with empty fields Verification</span>");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("jayoda", "00000000", extentTest.get());
 
@@ -1477,10 +1478,937 @@ public class MerchantTest extends BaseTest {
             extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
         }
 
-        
+        restartDriver();
 
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update with empty name field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("","3333300000","jm@gmail.com","0714445558","hill street, Dehiwala","10","1",extentTest.get());
+        extentTest.get().info("Leave name field empty");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        boolean isVisible1 = false;
+
+        try {
+            isVisible1 = MerchantPage.iaVisibleName();
+            if (isVisible1) {
+                extentTest.get().pass("<span style='color:red'>name is required: </span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P12_MU_Empty_Name");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update forum with empty merchant ID Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("UpdateEmptyMID","","jm@gmail.com","0714445558","hill street, Dehiwala","10","1",extentTest.get());
+        extentTest.get().info("Leave MID field empty");
+
+        MerchantPage.InsertBtn();
+
+        boolean isVisible2 = false;
+
+        try {
+            isVisible2 = MerchantPage.iaVisibleMid();
+            if (isVisible2) {
+                extentTest.get().pass("<span style='color:red'>MID is required: </span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P12_MU_Empty_MID");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update forum with empty email address Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("UpdateEmptyMID","124512451245","","0714445558","hill street, Dehiwala","10","1",extentTest.get());
+        extentTest.get().info("Leave email address field empty");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        boolean isVisible3 = false;
+
+        try {
+            isVisible3 = MerchantPage.iaVisibleEmail();
+            if (isVisible3) {
+                extentTest.get().pass("<span style='color:red'>email is required: </span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P12_MU_Empty_email");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update forum with empty address Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("UpdateEmptyMID","124512451245","jay@gmail.com","","Dehiwala","10","1",extentTest.get());
+        extentTest.get().info("Leave address field empty");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        boolean isVisible4 = false;
+
+        try {
+            isVisible4 = MerchantPage.iaVisibleContact();
+            if (isVisible4) {
+                extentTest.get().pass("<span style='color:red'>contact number is required: </span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P12_MU_Empty_Contact");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update forum with empty address Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("UpdateEmptyMID","124512451245","jay@gmail.com","0714445558","","10","1",extentTest.get());
+        extentTest.get().info("Leave address field empty");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        boolean isVisible5 = false;
+
+        try {
+            isVisible5 = MerchantPage.iaVisibleAddress();
+            if (isVisible5) {
+                extentTest.get().pass("<span style='color:red'>address is required: </span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P12_MU_Empty_Address");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update forum with empty address Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("UpdateEmptyMID","124512451245","jay@gmail.com","0714445558","Dehiwala","","1",extentTest.get());
+        extentTest.get().info("Leave address field empty");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        boolean isVisible6 = false;
+
+        try {
+            isVisible6 = MerchantPage.iaVisibleRadius();
+            if (isVisible6) {
+                extentTest.get().pass("<span style='color:red'>radius is required: </span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P12_MU_Empty_Radius");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update forum with empty address Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("UpdateEmptyMID","124512451245","jay@gmail.com","0714445558","Dehiwala","02","",extentTest.get());
+        extentTest.get().info("Leave address field empty");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        boolean isVisible7 = false;
+
+        try {
+            isVisible7 = MerchantPage.iaVisibleRadius();
+            if (isVisible7) {
+                extentTest.get().pass("<span style='color:red'>MDR percentage is required: </span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P12_MU_Empty_MDR");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+
+    @Test(priority = 13)
+    public void Update_with_Spaced_Name_Field_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update with spaced name field Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("          ","2221212121","wmjm@gmail.com","0777666699","Katubedda","10","1", extentTest.get());
+        extentTest.get().info("Entered spaced name");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        boolean isVisible1 = false;
+
+        try {
+            isVisible1 = MerchantPage.iaVisibleName();
+            if (isVisible1) {
+                extentTest.get().pass("<span style='color:red'>name is required: </span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P13_MU_Spaced_Name");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Spaced MID number field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click merchant update icon");
+
+
+        MerchantPage.MIDField("           ", extentTest.get());
+        extentTest.get().info("Entered spaced MID number");
+
+        // Spaces check
+        String value3 = MerchantPage.getMIDFieldValue();
+
+        extentTest.get().info("Actual value in field: <b>" + value3 + "</b>");
+
+        if(value3.contains(" ")){
+            extentTest.get().fail("<span style='color: red;'>Spaces are allowed in the MID number field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Spaces are not allowed in the MID number field</span>");
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Spaced MID number field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click merchant update icon");
+
+
+        MerchantPage.MIDField("12 456 7  8", extentTest.get());
+        extentTest.get().info("Entered spaced MID number");
+
+        // Spaces check
+        String value4 = MerchantPage.getMIDFieldValue();
+
+        extentTest.get().info("Actual value in field: <b>" + value4 + "</b>");
+
+        if(value3.contains(" ")){
+            extentTest.get().fail("<span style='color: red;'>Spaces are allowed in the MID number field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Spaces are not allowed in the MID number field</span>");
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update with spaced email field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("UpdateAutomation","2221212121","          ","0777666699","Katubedda","10","1", extentTest.get());
+        extentTest.get().info("Entered spaced name");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        boolean isVisible3 = false;
+
+        try {
+            isVisible3 = MerchantPage.iaVisibleEmail();
+            if (isVisible3) {
+                extentTest.get().pass("<span style='color:red'>email is required: </span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P13_MU_spaced_email");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update with spaced email field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("UpdateAutomation","2221212121","jayoda @gmail. com","0777666699","Katubedda","10","1", extentTest.get());
+        extentTest.get().info("Entered spaced name");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        boolean isVisible4 = false;
+
+        try {
+            isVisible4 = MerchantPage.iaVisibleEmail();
+            if (isVisible4) {
+                extentTest.get().pass("<span style='color:red'>email is required: </span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P13_MU_spaced_email");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Spaced contact number field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click merchant update icon");
+
+
+        MerchantPage.contactField("        ", extentTest.get());
+        extentTest.get().info("Entered spaced MID number");
+
+        // Spaces check
+        String value5 = MerchantPage.getContactFieldValue();
+
+        extentTest.get().info("Actual value in field: <b>" + value5 + "</b>");
+
+        if(value5.contains(" ")){
+            extentTest.get().fail("<span style='color: red;'>Spaces are allowed in the contact number field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Spaces are not allowed in the contact number field</span>");
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Spaced contact number field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click merchant update icon");
+
+
+        MerchantPage.contactField("07 2  68 4", extentTest.get());
+        extentTest.get().info("Entered spaced MID number");
+
+        // Spaces check
+        String value6 = MerchantPage.getContactFieldValue();
+
+        extentTest.get().info("Actual value in field: <b>" + value6 + "</b>");
+
+        if(value6.contains(" ")){
+            extentTest.get().fail("<span style='color: red;'>Spaces are allowed in the contact number field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Spaces are not allowed in the contact number field</span>");
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update with spaced address field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.UpdateMerchant("UpdateAutomation","2221212121","jayoda@gmail.com","0777666699","            ","10","1", extentTest.get());
+        extentTest.get().info("Entered spaced name");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        boolean isVisible5 = false;
+
+        try {
+            isVisible5 = MerchantPage.iaVisibleAddress();
+            if (isVisible5) {
+                extentTest.get().pass("<span style='color:red'>address is required: </span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P13_MU_spaced_address");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Spaced radius number field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click merchant update icon");
+
+
+        MerchantPage.RadiusField("      ", extentTest.get());
+        extentTest.get().info("Entered spaced radius number");
+
+        // Spaces check
+        String value7 = MerchantPage.getRadiusFieldValue();
+
+        extentTest.get().info("Actual value in field: <b>" + value7 + "</b>");
+
+        if(value7.contains(" ")){
+            extentTest.get().fail("<span style='color: red;'>Spaces are allowed in the radius number field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Spaces are not allowed in the radius number field</span>");
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Spaced radius number field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click merchant update icon");
+
+
+        MerchantPage.RadiusField("1  0", extentTest.get());
+        extentTest.get().info("Entered spaced radius number");
+
+        // Spaces check
+        String value8 = MerchantPage.getRadiusFieldValue();
+
+        extentTest.get().info("Actual value in field: <b>" + value8 + "</b>");
+
+        if(value8.contains(" ")){
+            extentTest.get().fail("<span style='color: red;'>Spaces are allowed in the radius number field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Spaces are not allowed in the radius number field</span>");
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Spaced MDR percentage field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click merchant update icon");
+
+
+        MerchantPage.MDRField("    ", extentTest.get());
+        extentTest.get().info("Entered spaced MDR percentage");
+
+        // Spaces check
+        String value9 = MerchantPage.getMDRvalue();
+
+        extentTest.get().info("Actual value in field: <b>" + value9 + "</b>");
+
+        if(value9.contains(" ")){
+            extentTest.get().fail("<span style='color: red;'>Spaces are allowed in the MDR percentage field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Spaces are not allowed in the MDR percentage field</span>");
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Spaced MDR percentage field Verification</span>");
+        loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click merchant update icon");
+
+
+        MerchantPage.MDRField("1 0", extentTest.get());
+        extentTest.get().info("Entered spaced MDR percentage");
+
+        // Spaces check
+        String value10 = MerchantPage.getMDRvalue();
+
+        extentTest.get().info("Actual value in field: <b>" + value10 + "</b>");
+
+        if(value10.contains(" ")){
+            extentTest.get().fail("<span style='color: red;'>Spaces are allowed in the MDR percentage field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Spaces are not allowed in the MDR percentage field</span>");
+        }
+        driver.quit();
+    }
+
+    @Test(priority = 14)
+    public void Update_Invalid_Data_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update with Special characters & letters in MID field Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.MIDField("abc@#123", extentTest.get());
+        extentTest.get().info("Entered spaced MID number");
+
+        String value2 = MerchantPage.getMIDFieldValue();
+
+        extentTest.get().info("Actual value in field: <b>" + value2 + "</b>");
+
+        if(!value2.matches("\\d*")){
+            extentTest.get().fail("<span style='color: red;'>Letters or special characters are allowed in the MID number field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Only numeric values are allowed in the MID field</span>");
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update with Special characters & letters in contact number Verification</span>");
+        loginPage = new LoginPage(driver);loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.contactField("abc@#123", extentTest.get());
+        extentTest.get().info("Entered spaced contact number");
+
+        String value1 = MerchantPage.getContactFieldValue();
+
+        extentTest.get().info("Actual value in field: <b>" + value1 + "</b>");
+
+        if(!value1.matches("\\d*")){
+            extentTest.get().fail("<span style='color: red;'>Letters or special characters are allowed in the contact number field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Only numeric values are allowed in the contact number field</span>");
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update with Special characters & letters in radius number Verification</span>");
+        loginPage = new LoginPage(driver);loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.RadiusField("abc@#123", extentTest.get());
+        extentTest.get().info("Entered spaced radius number");
+
+        String value = MerchantPage.getRadiusFieldValue();
+
+        extentTest.get().info("Actual value in field: <b>" + value + "</b>");
+
+        if(!value.matches("\\d*")){
+            extentTest.get().fail("<span style='color: red;'>Letters or special characters are allowed in the radius number field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Only numeric values are allowed in the radius number field</span>");
+        }
+
+        restartDriver();
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update with Special characters & letters in MDR percentage Verification</span>");
+        loginPage = new LoginPage(driver);loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE");
+
+        MerchantPage.MDRField("abc@#123", extentTest.get());
+        extentTest.get().info("Entered spaced radius number");
+
+        String value3 = MerchantPage.getMDRvalue();
+
+        extentTest.get().info("Actual value in field: <b>" + value3 + "</b>");
+
+        if(!value3.matches("\\d*")){
+            extentTest.get().fail("<span style='color: red;'>Letters or special characters are allowed in the MDR percentage field</span>");
+        }else{
+            extentTest.get().pass("<span style='color: green;'>Only numeric values are allowed in the MDR percentage field</span>");
+        }
+
+        driver.quit();
+    }
+
+    @Test(priority = 15)
+    public void Update_With_Exist_Data_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Update with already exist data field Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE icon");
+
+        MerchantPage.UpdateMerchant("AutomationMerchant","123456789","jayoda@gmail.com","0777777777","hill street, Dehiwala","1","1",extentTest.get());
+        extentTest.get().info("Refilled the forum with already exist data");
+
+        MerchantPage.InsertBtn();
+        extentTest.get().info("Click UPDATE");
+
+        String value1 = MerchantPage.getDeleteErrorMessage();
+
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = MerchantPage.isVisibleExistMsg();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color:red'>"+value1+"</span><span style='color:Green'> Messages were displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P7_MC_exist_MidField");
+            extentTest.get().fail("<span style='color: red;'>Timeout: verification might have failed: " + value1 + "</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+
+    @Test(priority = 15)
+    public void Update_Cancel_Button_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Cancel button Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.UpdateIcon();
+        extentTest.get().info("Click UPDATE icon");
+
+        MerchantPage.CloseBtn();
+        extentTest.get().info("Click CLOSE");
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = MerchantPage.isVisibleEditIcon();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color: green;'>Merchant details were displayed.</span>");
+            } else {
+                extentTest.get().fail("Merchant details NOT displayed. Merchant navigation might have failed.");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "MU15_CancelBtn");
+            extentTest.get().fail("<span style='color: red;'>Timeout: Navigation failed (Navigation failed)</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+
+    // -----------✅ Merchant Delete--------
+
+    @Test(priority = 16)
+    public void Merchant_Delete_Forum_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Cancel button Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.DeleteIcon();
+        extentTest.get().info("Click DELETE icon");
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = MerchantPage.isVisibleDeleteBtn();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color: green;'>Navigated to Merchant delete confirmation forum.</span>");
+            } else {
+                extentTest.get().fail("Merchant delete forum verification failed.");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "MD_Forum");
+            extentTest.get().fail("<span style='color: red;'>Timeout: Merchant delete forum verification failed</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+    @Test(priority = 17)
+    public void Merchant_Delete_Cancellation_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Cancel button Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.DeleteIcon();
+        extentTest.get().info("Click DELETE icon");
+
+        MerchantPage.DeleteCancelBtn();
+        extentTest.get().info("Click DELETE CANCEL button");
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = MerchantPage.isVisibleEditIcon();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color: green;'>Merchant delete cancelled successfully.</span>");
+            } else {
+                extentTest.get().fail("Merchant delete cancellation verification failed.");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "MD_cancellation");
+            extentTest.get().fail("<span style='color: red;'>Timeout: Merchant delete cancellation verification failed</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
 
     }
+    @Test(priority = 18)
+    public void Merchant_Delete_Verification() {
+
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Delete Verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        MerchantPage MerchantPage = new MerchantPage(driver);
+
+        MerchantPage.MerchantNavigation();
+        extentTest.get().info("Navigate to the Merchant function");
+
+        MerchantPage.DeleteIcon();
+        extentTest.get().info("Click DELETE icon");
+
+        MerchantPage.DeleteBtn();
+        extentTest.get().info("Click DELETE button");
+
+        String value1 = MerchantPage.getDeleteErrorMessage();
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = MerchantPage.isVisibleSuccessMsg();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color: green;'>" + value1 + ": Delete successfully.</span>");
+            } else {
+                extentTest.get().fail("Merchant delete verification failed.");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "MD_Delete");
+            extentTest.get().fail("<span style='color: red;'>Timeout: Merchant delete verification failed: "+ value1 + "</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+
+    }
+
 }
 
 

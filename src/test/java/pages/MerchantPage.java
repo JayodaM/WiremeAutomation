@@ -350,31 +350,42 @@ public class MerchantPage {
         test.info("Entered name: " + mdr);
     }
     public void contactField(String contact, ExtentTest test){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(Contact)).sendKeys(contact);
-        test.info("Entered contact number: " + contact);
+        WebElement MerchantID = wait.until(ExpectedConditions.visibilityOfElementLocated(Contact));
+        MerchantID.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        MerchantID.sendKeys(Keys.DELETE);
+        MerchantID.sendKeys(contact);
+        test.info("Entered MID: " + contact);
     }
     public String getContactFieldValue(){
         return driver.findElement(Contact).getAttribute("value");
     }
     public void MIDField(String mid, ExtentTest test){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(MID)).sendKeys(mid);
+        WebElement MerchantID = wait.until(ExpectedConditions.visibilityOfElementLocated(MID));
+        MerchantID.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        MerchantID.sendKeys(Keys.DELETE);
+        MerchantID.sendKeys(mid);
         test.info("Entered MID: " + mid);
     }
-
     public String getMIDFieldValue(){
         return driver.findElement(MID).getAttribute("value");
     }
 
     public void RadiusField(String radius, ExtentTest test){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(Radius)).sendKeys(radius);
-        test.info("Entered MID: "+ radius);
+        WebElement MerchantID = wait.until(ExpectedConditions.visibilityOfElementLocated(Radius));
+        MerchantID.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        MerchantID.sendKeys(Keys.DELETE);
+        MerchantID.sendKeys(radius);
+        test.info("Entered MID: " + radius);
     }
     public String getRadiusFieldValue(){
         return driver.findElement(Radius).getAttribute("value");
     }
     public void MDRField(String mdr, ExtentTest test){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(MDR)).sendKeys(mdr);
-        test.info("Entered MDR: "+mdr);
+        WebElement MerchantID = wait.until(ExpectedConditions.visibilityOfElementLocated(MDR));
+        MerchantID.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        MerchantID.sendKeys(Keys.DELETE);
+        MerchantID.sendKeys(mdr);
+        test.info("Entered MID: " + mdr);
     }
     public String getMDRvalue(){
         return driver.findElement(MDR).getAttribute("value");
@@ -567,8 +578,23 @@ public class MerchantPage {
         boolean mdr = wait.until(ExpectedConditions.visibilityOfElementLocated(mdrTxt)).isDisplayed();
 
         return name && mid && email && contact && address && radius && mdr;
-
     }
 
+    private final By DeleteIcon = By.xpath("(//*[name()='svg'][@title='Delete'])[1]");
+    private final By DeleteBtn = By.xpath("(//span[normalize-space()='Delete'])[1]");
+    private final By CancelBtn = By.xpath("(//span[normalize-space()='Close'])[1]");
 
+    public void DeleteIcon(){
+        wait.until(ExpectedConditions.elementToBeClickable(DeleteIcon)).click();
+    }
+    public void DeleteBtn(){
+        wait.until(ExpectedConditions.elementToBeClickable(DeleteBtn)).click();
+    }
+    public void DeleteCancelBtn(){
+        wait.until(ExpectedConditions.elementToBeClickable(CancelBtn)).click();
+    }
+
+    public boolean isVisibleDeleteBtn(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(DeleteBtn)).isDisplayed();
+    }
 }
