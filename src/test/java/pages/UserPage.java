@@ -39,15 +39,15 @@ public class UserPage {
     private final By UserCancelButton = By.id("userCloseButton");
     private final By UserInformation = By.xpath("(//td[@value='Report User'])[1]");
     private final By EmailExistMessage = By.xpath("//div[contains(text(),'Email is already taken')]");
-    private final By PartnerRole = By.xpath("(//li[normalize-space()='Report Rolew'])[1]");
+    private final By PartnerRole = By.xpath("(//li[@role='option'])[7]");
     private final By Partner = By.xpath("(//div[@role='button'])[3]");
-    private final By SelectPartner = By.xpath("(//li[normalize-space()='CBA Test'])[1]");
-    private final By MerchantRole = By.xpath("(//li[normalize-space()='Merchant'])[1]");
+    private final By SelectPartner = By.xpath("(//li[@role='option'])[2]");
+    private final By MerchantRole = By.xpath("(//li[@role='option'])[8]");
     private final By Merchant = By.xpath("(//div[@role='button'])[3]");
-    private final By SelectMerchant = By.xpath("(//li[normalize-space()='60606060 | CBA MERCHANT 2'])[1]");
+    private final By SelectMerchant = By.xpath("(//li[@role='option'])[2]");
     private final By UserResetButton = By.id("userResetButton");
-    private final By Merchant01 = By.xpath("//div[contains(text(),'60606060 | CBA MERCHANT 2')]");
-    private final By Partner01 = By.xpath("//div[contains(text(),'CBA Test')]");
+    private final By Merchant01 = By.xpath("(//li[@role='option'])[3]");
+    private final By Partner01 = By.xpath("(//li[@role='option'])[2]");
     private final By ExistMessageInUpdate = By.xpath("//div[contains(text(),'The user name is already taken')]");
     private final By ExistMessageInUpdateEmail = By.xpath("//div[contains(text(),'The email is already taken')]");
 
@@ -77,14 +77,28 @@ public class UserPage {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
         wait.until(ExpectedConditions.elementToBeClickable(UserTable)).click();
     }
-    public void UserCreateForm(){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(UserCreateBtn));
-        WebElement button = driver.findElement(UserCreateBtn);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", button);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
+    public void UserCreateForm() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        try {
+            WebElement button = wait.until(
+                    ExpectedConditions.refreshed(
+                            ExpectedConditions.elementToBeClickable(UserCreateBtn)
+                    )
+            );
+
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", button);
+
+            try {
+                button.click();
+            } catch (Exception e) {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
-
 
     public void UserCreate(String name, String UName, String ConNum, String mail, ExtentTest test){
 
@@ -186,6 +200,7 @@ public class UserPage {
         test.info("Entered Name: " + name);
         wait.until(ExpectedConditions.visibilityOfElementLocated(UserName)).sendKeys(UName);
         test.info("Entered User Name: " + UName);
+
         wait.until(ExpectedConditions.elementToBeClickable(ClickUserRole)).click();
         test.info("Clicked on User Role dropdown");
 
@@ -198,6 +213,7 @@ public class UserPage {
         test.info("Entered Contact Number: " + ConNum);
         wait.until(ExpectedConditions.visibilityOfElementLocated(Email)).sendKeys(mail);
         test.info("Entered Email: " + mail);
+
         wait.until(ExpectedConditions.elementToBeClickable(Partner)).click();
         test.info("Clicked on User Role dropdown");
 
@@ -625,6 +641,14 @@ public class UserPage {
     }
     public boolean isVisiblePRIconVisible(){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(UserPRIcon)).isDisplayed();
+    }
+    public String getDeleteErrorMessage() {
+        WebElement message = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("//div[@role='alert']")
+                )
+        );
+        return message.getText();
     }
 
 }

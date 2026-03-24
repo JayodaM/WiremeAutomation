@@ -26,13 +26,13 @@ public class DevicePage {
     private final By SNField = By.id("serialNo");
     private final By IMEINum = By.id("imeiNo");
     private final By DeviceType = By.xpath("(//div[@role='button'])[3]");
-    private final By SelectDeviceType = By.xpath("/html[1]/body[1]/div[7]/div[3]/ul[1]/li[2]");
+    private final By SelectDeviceType = By.xpath("(//li[@role='option'])[2]");
     private final By SearchDeviceType = By.xpath("(//input[@placeholder='Search..'])[1]");
     private final By Vendor = By.xpath("(//div[@role='button'])[4]");
-    private final By SelectVendor = By.xpath("/html[1]/body[1]/div[7]/div[3]/ul[1]/li[3]");
+    private final By SelectVendor = By.xpath("(//li[@role='option'])[2]");
     private final By SearchVendor = By.xpath("(//input[@placeholder='Search..'])[1]");
     private final By DeviceModel = By.xpath("(//div[@role='button'])[5]");
-    private final By SelectDeviceModel = By.xpath("/html[1]/body[1]/div[7]/div[3]/ul[1]/li[2]");
+    private final By SelectDeviceModel = By.xpath("(//li[@role='option'])[2]");
     private final By SearchDeviceModel = By.xpath("(//input[@placeholder='Search..'])[1]");
     private final By SuccessMsg = By.xpath("//div[contains(text(),'Success !')]");
     private final By AlreadyExistMsg = By.xpath("//div[contains(text(),'Serial no is already taken')]");
@@ -260,9 +260,9 @@ public class DevicePage {
 
     private final By MultipleDeviceBtn = By.xpath("(//span[normalize-space()='Multiple'])[1]");
     private final By VendorM = By.xpath("(//div[@role='button'])[3]");
-    private final By VendorMSelect = By.xpath("(//li[normalize-space()='Vendor Y'])[1]");
+    private final By VendorMSelect = By.xpath("(//li[@role='option'])[3]");
     private final By DeviceModelM = By.xpath("(//div[@role='button'])[4]");
-    private final By DeviceModelMSelect = By.xpath("(//li[normalize-space()='Model Y'])[1]");
+    private final By DeviceModelMSelect = By.xpath("(//li[@role='option'])[2]");
     private final By DownloadTemplate = By.xpath("(//a[@title='Download Template'])[1]");
 
     private final By EmptyDropdownTxt = By.xpath("(//p[@class='MuiTypography-root jss147 MuiTypography-body1'])[1]");
@@ -317,11 +317,11 @@ public class DevicePage {
     private final By UpdateIcon = By.xpath("(//*[name()='svg'][@title='Edit'])[1]");
     private final By UpdateButton = By.id("actionButton");
     private final By NewDeviceType = By.xpath("(//div[contains(text(),'Edc Pos')])[1]");
-    private final By SelectedDT = By.xpath("(//li[normalize-space()='Mobile Pos'])[1]");
+    private final By SelectedDT = By.xpath("(//li[@role='option'])[3]");
     private final By NewVendor = By.xpath("(//div[contains(text(),'Vendor Y')])[1]");
-    private final By SelectedV = By.xpath("(//li[normalize-space()='CBA'])[1]");
+    private final By SelectedV = By.xpath("(//li[@role='option'])[3]");
     private final By NewDeviceModel = By.xpath("(//div[@role='button'])[5]");
-    private final By SelectedDM= By.xpath("(//li[normalize-space()='A910s'])[1]");
+    private final By SelectedDM= By.xpath("(//li[@role='option'])[2]");
 
 
     public void EditIcon(){

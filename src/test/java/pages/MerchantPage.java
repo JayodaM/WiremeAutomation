@@ -38,17 +38,17 @@ public class MerchantPage {
     private final By Name = By.id("name");
     private final By MID = By.id("merchantId");
     private final By Partner = By.xpath("(//div[@role='button'])[3]");
-    private final By SelectPartner = By.xpath("(//li[normalize-space()='Burger King'])[1]");
+    private final By SelectPartner = By.xpath("(//li[@role='option'])[2]");
     private final By email = By.id("email");
     private final By Contact =By.id("contactNo");
     private final By Address = By.id("address");
     private final By Province = By.xpath("(//div[@role='button'])[4]");
-    private final By SelectProvince = By.xpath("(//li[normalize-space()='Western'])[1]");
+    private final By SelectProvince = By.xpath("(//li[@role='option'])[2]");
     private final By District = By.xpath("(//div[@role='button'])[5]");
-    private final By SelectDistrict = By.xpath("(//li[normalize-space()='Colombo'])[1]");
+    private final By SelectDistrict = By.xpath("(//li[@role='option'])[2]");
     private final By Radius = By.xpath("(//input[@id='radius'])[1]");
     private final By MCC = By.xpath("(//div[@role='button'])[6]");
-    private final By SelectMCC = By.xpath("(//li[normalize-space()='6079 - Computer Stores'])[1]");
+    private final By SelectMCC = By.xpath("(//li[@role='option'])[2]");
     private final By MDR = By.xpath("(//input[@id='radius'])[2]");
 
     private final By QR = By.xpath("(//input[@name='isQr'])[1]");

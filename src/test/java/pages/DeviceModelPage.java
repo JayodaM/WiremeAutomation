@@ -40,7 +40,7 @@ public class DeviceModelPage {
     private final By CancelBtn = By.id("closeButton");
     private final By Name = By.id("name");
     private final By VendorDropDown = By.xpath("(//div[@role='button'])[3]");
-    private final By VendorSelection = By.xpath("(//li[normalize-space()='Vendor Y'])[1]");
+    private final By VendorSelection = By.xpath("(//li[@role='option'])[2]");
     private final By fileUploadInput = By.xpath("(//input[@type='file'])[1]");
     private final By SuccessMsg = By.xpath("(//div[contains(text(),'Success !')])[1]");
     private final By NameText = By.id("name-text");

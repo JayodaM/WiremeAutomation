@@ -1,6 +1,7 @@
 package tests;
 
 import base.BaseTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import org.openqa.selenium.TimeoutException;
 import org.testng.annotations.Test;
 import pages.LoginPage;
@@ -88,18 +89,21 @@ public class UserTest extends BaseTest {
         extentTest.get().info("Verify that the user create successfully");
         userPage.UserInsert();
 
+        String actual = userPage.getDeleteErrorMessage();
+
         boolean isVisible = false;
 
         try {
-            isVisible = userPage.isVisibleUserCreateSuccessMessage();
+            isVisible = userPage.isVisibleUserAlreadyExistMessage();
             if (isVisible) {
-                extentTest.get().pass("<span style='color: green;'>Success message displayed. User created.</span>");
+                extentTest.get().pass("<span style='color:Green'><b>Actual message:</b> " + actual + "</span>");
             } else {
-                extentTest.get().fail("Success message NOT displayed. User creation might have failed.");
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed:  "+ actual +"</span>");
             }
         } catch (TimeoutException e) {
-            String ScreenshotPath = ScreenshotUtil.captureScreenshot(driver, "LoginWithValidCredential");
-            extentTest.get().fail("<span style='color: red;'>Timeout: Success message not found (User probably not created)</span>");
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P3_PC_Happy_Path");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  "+actual+"</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
         }
         driver.quit();
     }
@@ -120,17 +124,21 @@ public class UserTest extends BaseTest {
         userPage.UserInsert();
         extentTest.get().info("Click on the user Insert button");
 
+        String actual = userPage.getDeleteErrorMessage();
+
         boolean isVisible = false;
 
         try {
             isVisible = userPage.isVisibleUserAlreadyExistMessage();
             if (isVisible) {
-                extentTest.get().pass("<span style='color: red;'>User name is already taken</span><span style='color: green;'>: message was displayed.</span>");
+                extentTest.get().pass("<b>Actual message: </b><span style='color:red'> " + actual + "</span>");
             } else {
-                extentTest.get().fail("Already exist user verification failed");
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed:  "+ actual +"</span>");
             }
         } catch (TimeoutException e) {
-            extentTest.get().fail("<span style='color: red;'>Timeout: User already exist message not display</span>");
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P4_UC_Exist");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  "+actual+"</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
         }
         driver.quit();
 
@@ -868,7 +876,7 @@ public class UserTest extends BaseTest {
             extentTest.get().fail("<span style='color: red;'>Timeout: User update details was not displayed</span>");
         }
 
-//        driver.quit();
+        driver.quit();
     }
 
     @Test(priority = 27)
@@ -968,7 +976,7 @@ public class UserTest extends BaseTest {
     public void User_Update_With_Only_User_Role_Verification() {
         extentTest.get().info("<span style='font-style: italic;font-weight: bold;'>User update with changing only User Role </span>");
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("admin", "00000000", extentTest.get());
+        loginPage.login("jayoda", "00000000", extentTest.get());
         UserPage userPage = new UserPage(driver);
         userPage.UserNewUI();
         userPage.UserTable();
@@ -1348,7 +1356,6 @@ public class UserTest extends BaseTest {
             extentTest.get().fail("<span style='color: red;'>Timeout: User name invalid message not display</span>");
         }
 
-        // Restart the browser
         restartDriver();
 
         // Second session - create fresh objects
@@ -1432,6 +1439,7 @@ public class UserTest extends BaseTest {
         }
 
         restartDriver();
+
         loginPage = new LoginPage(driver);
         loginPage.login("admin", "00000000", extentTest.get());
 
@@ -1457,6 +1465,7 @@ public class UserTest extends BaseTest {
         }
 
         restartDriver();
+
         loginPage = new LoginPage(driver);
         loginPage.login("admin", "00000000", extentTest.get());
 
@@ -1482,6 +1491,7 @@ public class UserTest extends BaseTest {
         }
 
         restartDriver();
+
         loginPage = new LoginPage(driver);
         loginPage.login("admin", "00000000", extentTest.get());
 
@@ -1507,6 +1517,7 @@ public class UserTest extends BaseTest {
         }
 
         restartDriver();
+
         loginPage = new LoginPage(driver);
         loginPage.login("admin", "00000000", extentTest.get());
 
