@@ -40,10 +40,10 @@ public class BulkUploadPage {
     private final By CloseIcon = By.id("closeButton");
     private final By fileUploadInput = By.xpath("(//input[@type='file'])[1]"); // file upload
     private final By Template = By.xpath("(//a[@title='Download Template'])[1]");
-    private final By UploadedFile = By.xpath("(//p[normalize-space()='MERCHANT_UPLOAD_TEMPLATE_V1.0.6.25e83bf3.xlsx'])[1]");
-    private final By EmptyTxt = By.xpath("(//p[@class='MuiTypography-root jss109 MuiTypography-body1'])[1]");
+    private final By UploadedFile = By.xpath("(//p[normalize-space()='File_Upload_Verfication.xlsx'])[1]");
+    private final By CommonXpath = By.xpath("(//p[contains(@class,'MuiTypography-body1')])[1]");
 
-    private final By SuccessMsg = By.xpath("(//div[contains(text(),'Success !')])[1]");
+    private final By SuccessMsg = By.xpath("(//div[@role='alert'])[1]");
 
     public void BulkUploadCreateBtn(){
 
@@ -94,5 +94,8 @@ public class BulkUploadPage {
     }
     public boolean isVisibleUserCreateSuccessMessage(){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(SuccessMsg)).isDisplayed();
+    }
+    public boolean CommonXpath(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(CommonXpath)).isDisplayed();
     }
 }
