@@ -41,7 +41,11 @@ public class BulkUploadPage {
     private final By fileUploadInput = By.xpath("(//input[@type='file'])[1]"); // file upload
     private final By Template = By.xpath("(//a[@title='Download Template'])[1]");
     private final By UploadedFile = By.xpath("(//p[normalize-space()='File_Upload_Verfication.xlsx'])[1]");
-    private final By CommonXpath = By.xpath("(//p[contains(@class,'MuiTypography-body1')])[1]");
+    private final By EmptyDragAndDrop = By.xpath("//p[contains(@class,'MuiTypography-body1') and contains(text(),'upload')]");
+    private final By InvalidFileFormat = By.xpath("//p[contains(@class,'MuiTypography-body1') and contains(text(),'!')]");
+
+
+    private final By RequiredErrorMsg = By.xpath("//p[contains(@class,'MuiTypography-body1') and contains(text(),'required')]");
 
     private final By SuccessMsg = By.xpath("(//div[@role='alert'])[1]");
 
@@ -95,7 +99,86 @@ public class BulkUploadPage {
     public boolean isVisibleUserCreateSuccessMessage(){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(SuccessMsg)).isDisplayed();
     }
-    public boolean CommonXpath(){
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(CommonXpath)).isDisplayed();
+
+    public String getDragNDropEmpty() {
+        try {
+            WebElement error = wait.until(
+                    ExpectedConditions.visibilityOfElementLocated(EmptyDragAndDrop)
+            );
+            return error.getText();
+        } catch (TimeoutException e) {
+            return "No error message displayed";
+        }
     }
+    public boolean isVisibleDragNDropEmpty(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(EmptyDragAndDrop)).isDisplayed();
+    }
+
+    public String getRequiredMessage() {
+        try {
+            WebElement error = wait.until(
+                    ExpectedConditions.visibilityOfElementLocated(RequiredErrorMsg)
+            );
+            return error.getText();
+        } catch (TimeoutException e) {
+            return "No error message displayed";
+        }
+    }
+    public boolean isVisibleRequiredEmpty(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(RequiredErrorMsg)).isDisplayed();
+    }
+    public String getInvalidFileFormatMsg() {
+        try {
+            WebElement error = wait.until(
+                    ExpectedConditions.visibilityOfElementLocated(InvalidFileFormat)
+            );
+            return error.getText();
+        } catch (TimeoutException e) {
+            return "No error message displayed";
+        }
+    }
+    public boolean isVisibleInvalidFileFormat(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(InvalidFileFormat)).isDisplayed();
+    }
+
+    public boolean CommonXpath(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(EmptyDragAndDrop)).isDisplayed();
+    }
+
+    // -----------✅ Bulk upload Delete---------------- //
+
+
+    private final By PartnerIcon = By.xpath("(//p[normalize-space()='Partner'])[1]");
+
+
+    public void Administration(){
+        wait.until(ExpectedConditions.elementToBeClickable(AdministrationBtn)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(MerchantManagement)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(PartnerIcon)).click();
+
+    }
+
+    private final By PartnerBulkSelection = By.xpath("(//input[@type='checkbox' and @value='0']/parent::span)[1]");
+    private final By DeleteIcon = By.xpath("(//button[@type='button'])[1]");
+
+
+    public void BulkDeletePartner(){
+        WebElement checkbox = wait.until(
+                ExpectedConditions.elementToBeClickable(PartnerBulkSelection)
+        );
+
+        if (!checkbox.isSelected()) {
+            checkbox.click();
+        }
+    }
+
+    public void DeleteBtn(){
+        wait.until(ExpectedConditions.elementToBeClickable(DeleteIcon)).click();
+    }
+
+    public boolean isVisibleBulkDeleteBtn(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(DeleteIcon)).isDisplayed();
+    }
+
+
 }
