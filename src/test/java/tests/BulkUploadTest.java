@@ -1568,26 +1568,26 @@ public class BulkUploadTest extends BaseTest {
     }
 
     @Test(priority = 21)
-    public void Bulk_Delete_Verification() {
-        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Empty field verification - Partner Name</span>");
+    public void Terminal_Bulk_Delete_Icon_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Terminal Bulk Delete icon verification</span>");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("jayoda", "00000000", extentTest.get());
 
         extentTest.get().info("Initializing MerchantPage object");
         BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
 
-        BulkUploadPage.Administration();
-        extentTest.get().info("Navigate to partner function");
+        BulkUploadPage.TerminalNavigation();
+        extentTest.get().info("Navigate to terminal function");
 
-        BulkUploadPage.BulkDeletePartner();
-        extentTest.get().info("Selected partners");
+        BulkUploadPage.selectCheckboxesByIndexes(extentTest.get(),2,3,4); // first and second checkbox
+        extentTest.get().info("Selected Terminals");
 
         boolean isVisible21 = false;
 
         try {
             isVisible21 = BulkUploadPage.isVisibleBulkDeleteBtn();
             if (isVisible21) {
-                extentTest.get().pass("<span style='color:green'> Bulk delete button was displayed</span>");
+                extentTest.get().pass("<span style='color:green'> Terminal Bulk delete button was displayed</span>");
             } else {
                 extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
             }
@@ -1597,6 +1597,427 @@ public class BulkUploadTest extends BaseTest {
             extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
         }
 
-
+        driver.quit();
     }
+
+    @Test(priority = 22)
+    public void Terminal_Bulk_Delete_Forum_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Terminal Bulk Delete forum verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
+
+        BulkUploadPage.TerminalNavigation();
+        extentTest.get().info("Navigate to partner function");
+
+        BulkUploadPage.selectCheckboxesByIndexes(extentTest.get(),2,3,4); // first and second checkbox
+        extentTest.get().info("Selected Terminals");
+
+        BulkUploadPage.DeleteIconClick();
+        extentTest.get().info("Click on Bulk Delete icon");
+
+        BulkUploadPage.logSelectedRows(extentTest.get());
+
+        boolean isVisible21 = false;
+
+        try {
+            isVisible21 = BulkUploadPage.isVisibleBulkDeleteForum();
+            if (isVisible21) {
+                extentTest.get().pass("<span style='color:green'> Terminal Bulk delete forum displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P22_BD_Forum");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        driver.quit();
+    }
+
+    @Test(priority = 24)
+    public void Terminal_Bulk_Delete_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Terminal Bulk delete verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
+
+        BulkUploadPage.TerminalNavigation();
+        extentTest.get().info("Navigate to partner function");
+
+        BulkUploadPage.selectCheckboxesByIndexes(extentTest.get(),2,3,4); // first and second checkbox
+        extentTest.get().info("Selected Terminals");
+
+        BulkUploadPage.DeleteIconClick();
+        extentTest.get().info("Click on Bulk Delete icon");
+
+        BulkUploadPage.logSelectedRows(extentTest.get());
+
+        BulkUploadPage.DeleteButton();
+        extentTest.get().info("Click DELETE");
+
+        String actual = BulkUploadPage.getDeleteMessage();
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = BulkUploadPage.isVisibleDeleteSuccessMsg();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color:Green'><b>Actual message:</b> " + actual + "</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed:  "+ actual +"</span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P24_Delete");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  "+actual+"</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+    @Test(priority = 25)
+    public void Terminal_Bulk_Delete_cancellation_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Terminal Bulk Delete cancellation verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
+
+        BulkUploadPage.TerminalNavigation();
+        extentTest.get().info("Navigate to Terminal function");
+
+        BulkUploadPage.selectCheckboxesByIndexes(extentTest.get(),2,3,4); // first and second checkbox
+        extentTest.get().info("Selected Terminals");
+
+        BulkUploadPage.DeleteIconClick();
+        extentTest.get().info("Click on Bulk Delete icon");
+
+        BulkUploadPage.DeleteCancelBtn();
+        extentTest.get().info("Click CANCEL");
+
+        BulkUploadPage.logSelectedRows(extentTest.get());
+
+        boolean isVisible21 = false;
+
+        try {
+            isVisible21 = BulkUploadPage.isVisibleEditIcon();
+            if (isVisible21) {
+                extentTest.get().pass("<span style='color:green'> Terminal Bulk delete cancelled, Navigated to back</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P25_BD_Cancelled");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+    @Test(priority = 26)
+    public void Merchant_Bulk_Delete_Icon_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Bulk Delete icon verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
+
+        BulkUploadPage.MerchantNavigation();
+        extentTest.get().info("Navigate to Merchant function");
+
+        BulkUploadPage.selectCheckboxesByIndexes(extentTest.get(),2,3,4); // first and second checkbox
+        extentTest.get().info("Selected Merchant");
+
+        boolean isVisible21 = false;
+
+        try {
+            isVisible21 = BulkUploadPage.isVisibleBulkDeleteBtn();
+            if (isVisible21) {
+                extentTest.get().pass("<span style='color:green'> Merchant Bulk delete button was displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P25_Merchant_Icon");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+
+    @Test(priority = 27)
+    public void Merchant_Bulk_Delete_Forum_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Bulk Delete forum verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
+
+        BulkUploadPage.MerchantNavigation();
+        extentTest.get().info("Navigate to Merchant function");
+
+        BulkUploadPage.selectCheckboxesByIndexes(extentTest.get(),2,3,4); // first and second checkbox
+        extentTest.get().info("Selected Merchant");
+
+        BulkUploadPage.DeleteIconClick();
+        extentTest.get().info("Click on Bulk Delete icon");
+
+        BulkUploadPage.logSelectedRowsMerchant(extentTest.get());
+
+        boolean isVisible21 = false;
+
+        try {
+            isVisible21 = BulkUploadPage.isVisibleBulkDeleteForum();
+            if (isVisible21) {
+                extentTest.get().pass("<span style='color:green'> Merchant Bulk delete forum displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P27_BD_Forum");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+       // driver.quit();
+    }
+
+    @Test(priority = 28)
+    public void Bulk_Delete_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Bulk delete verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
+
+        BulkUploadPage.MerchantNavigation();
+        extentTest.get().info("Navigate to Merchant function");
+
+        BulkUploadPage.selectCheckboxesByIndexes(extentTest.get(),2,3,4); // first and second checkbox
+        extentTest.get().info("Selected Merchant");
+
+        BulkUploadPage.DeleteIconClick();
+        extentTest.get().info("Click on Bulk Delete icon");
+
+        BulkUploadPage.logSelectedRowsMerchant(extentTest.get());
+
+        BulkUploadPage.DeleteButton();
+        extentTest.get().info("Click DELETE");
+
+        String actual = BulkUploadPage.getDeleteMessage();
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = BulkUploadPage.isVisibleDeleteSuccessMsg();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color:Green'><b>Actual message:</b> " + actual + "</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed:  "+ actual +"</span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P28_Delete");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  "+actual+"</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+    @Test(priority = 29)
+    public void Bulk_Delete_cancellation_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Merchant Bulk Delete cancellation verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
+
+        BulkUploadPage.MerchantNavigation();
+        extentTest.get().info("Navigate to Merchant function");
+
+        BulkUploadPage.selectCheckboxesByIndexes(extentTest.get(),2,3,4); // first and second checkbox
+        extentTest.get().info("Selected Merchant");
+
+        BulkUploadPage.DeleteIconClick();
+        extentTest.get().info("Click on Bulk Delete icon");
+
+        BulkUploadPage.logSelectedRowsMerchant(extentTest.get());
+
+        BulkUploadPage.DeleteCancelBtn();
+        extentTest.get().info("Click CANCEL");
+
+        boolean isVisible21 = false;
+
+        try {
+            isVisible21 = BulkUploadPage.isVisibleEditIconMerchant();
+            if (isVisible21) {
+                extentTest.get().pass("<span style='color:green'> Merchant Bulk delete cancelled, Navigated to back</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P29_BD_Cancelled");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+
+    @Test(priority = 30)
+    public void Partner_Bulk_Delete_Icon_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Partner Bulk Delete icon verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
+
+        BulkUploadPage.AdministrationPartner();
+        extentTest.get().info("Navigate to Partner function");
+
+        BulkUploadPage.selectCheckboxes(extentTest.get(),2, 3); // first and second checkbox
+        extentTest.get().info("Selected Partner");
+
+        boolean isVisible21 = false;
+
+        try {
+            isVisible21 = BulkUploadPage.isVisibleBulkDeleteBtn();
+            if (isVisible21) {
+                extentTest.get().pass("<span style='color:green'> Partner Bulk delete button was displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P31_Partner_Icon");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        //driver.quit();
+    }
+
+    @Test(priority = 31)
+    public void Partner_Bulk_Delete_Forum_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Partner Bulk Delete forum verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
+
+        BulkUploadPage.AdministrationPartner();
+        extentTest.get().info("Navigate to Merchant function");
+
+        BulkUploadPage.selectCheckboxesByIndexes(extentTest.get(),2,3,4); // first and second checkbox
+        extentTest.get().info("Selected Partner");
+
+        BulkUploadPage.DeleteIconClick();
+        extentTest.get().info("Click on Bulk Delete icon");
+
+        BulkUploadPage.logSelectedRowsMerchant(extentTest.get());
+
+        boolean isVisible21 = false;
+
+        try {
+            isVisible21 = BulkUploadPage.isVisibleBulkDeleteForum();
+            if (isVisible21) {
+                extentTest.get().pass("<span style='color:green'> Partner Bulk delete forum displayed</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P27_BD_Forum");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+
+        // driver.quit();
+    }
+
+    @Test(priority = 32)
+    public void Partner_Bulk_Delete_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Partner Bulk delete verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
+
+        BulkUploadPage.AdministrationPartner();
+        extentTest.get().info("Navigate to Merchant function");
+
+        BulkUploadPage.selectCheckboxesByIndexes(extentTest.get(),2,3,4); // first and second checkbox
+        extentTest.get().info("Selected Partner");
+
+        BulkUploadPage.DeleteIconClick();
+        extentTest.get().info("Click on Bulk Delete icon");
+
+        BulkUploadPage.logSelectedRowsMerchant(extentTest.get());
+
+        BulkUploadPage.DeleteButton();
+        extentTest.get().info("Click DELETE");
+
+        String actual = BulkUploadPage.getDeleteMessage();
+
+        boolean isVisible = false;
+
+        try {
+            isVisible = BulkUploadPage.isVisibleDeleteSuccessMsg();
+            if (isVisible) {
+                extentTest.get().pass("<span style='color:Green'><b>Actual message:</b> " + actual + "</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed:  "+ actual +"</span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P32_Delete");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  "+actual+"</span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+    @Test(priority = 33)
+    public void Partner_Bulk_Delete_cancellation_Verification() {
+        extentTest.get().info("<span style= 'font-style: italic; font-weight: bold;'>Partner Bulk Delete cancellation verification</span>");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("jayoda", "00000000", extentTest.get());
+
+        extentTest.get().info("Initializing MerchantPage object");
+        BulkUploadPage BulkUploadPage = new BulkUploadPage(driver);
+
+        BulkUploadPage.AdministrationPartner();
+        extentTest.get().info("Navigate to Merchant function");
+
+        BulkUploadPage.selectCheckboxesByIndexes(extentTest.get(),2,3,4); // first and second checkbox
+        extentTest.get().info("Selected Partner");
+
+        BulkUploadPage.DeleteIconClick();
+        extentTest.get().info("Click on Bulk Delete icon");
+
+        BulkUploadPage.logSelectedRowsMerchant(extentTest.get());
+
+        BulkUploadPage.DeleteCancelBtn();
+        extentTest.get().info("Click CANCEL");
+
+        boolean isVisible21 = false;
+
+        try {
+            isVisible21 = BulkUploadPage.isVisibleEditIconMerchant();
+            if (isVisible21) {
+                extentTest.get().pass("<span style='color:green'> Partner Bulk delete cancelled, Navigated to back</span>");
+            } else {
+                extentTest.get().fail("<span style = 'color: red>'Verification failed: verification message not displayed: </span>");
+            }
+        } catch (TimeoutException e) {
+            String screenshotPath = ScreenshotUtil.captureScreenshot(driver, "P33_BD_Cancelled");
+            extentTest.get().fail("<span style='color: red;'>Timeout:verification might have failed :  </span>");
+            extentTest.get().fail("Test execution failed: " + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        }
+        driver.quit();
+    }
+
 }

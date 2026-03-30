@@ -1,10 +1,13 @@
 package pages;
 
+import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class BulkUploadPage {
 
@@ -148,37 +151,194 @@ public class BulkUploadPage {
     // -----------✅ Bulk upload Delete---------------- //
 
 
+
+    private final By TerminalIcon = By.xpath("(//p[normalize-space()='Terminal'])[1]");
+
+    public void TerminalNavigation(){
+        wait.until(ExpectedConditions.elementToBeClickable(AdministrationBtn)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(MerchantManagement)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(TerminalIcon)).click();
+
+    }
+
     private final By PartnerIcon = By.xpath("(//p[normalize-space()='Partner'])[1]");
 
-
-    public void Administration(){
+    public void AdministrationPartner(){
         wait.until(ExpectedConditions.elementToBeClickable(AdministrationBtn)).click();
         wait.until(ExpectedConditions.elementToBeClickable(MerchantManagement)).click();
         wait.until(ExpectedConditions.elementToBeClickable(PartnerIcon)).click();
 
     }
-
-    private final By PartnerBulkSelection = By.xpath("(//input[@type='checkbox' and @value='0']/parent::span)[1]");
     private final By DeleteIcon = By.xpath("(//button[@type='button'])[1]");
+    private final By DeleteBtn = By.xpath("(//span[normalize-space()='Delete'])[1]");
+    private final By DeleteCancelBtn = By.xpath("(//span[normalize-space()='Close'])[1]");
+
+    private final By DeleteSuccessMsg = By.xpath("(//div[contains(text(),'Success !')])[1]");
+    private final By EditIcon = By.xpath("(//button[@title='Edit'])[1]");
+
+    public boolean isVisibleEditIcon(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(EditIcon)).isDisplayed();
+    }
 
 
-    public void BulkDeletePartner(){
-        WebElement checkbox = wait.until(
-                ExpectedConditions.elementToBeClickable(PartnerBulkSelection)
-        );
+    public void selectCheckboxesByIndexes(ExtentTest test, int... indexes) {
+        // Wait until checkboxes are visible
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                By.xpath("//span[contains(@class,'MuiCheckbox-root')]")
+        ));
 
-        if (!checkbox.isSelected()) {
-            checkbox.click();
+        List<WebElement> checkboxes = driver.findElements(By.xpath("//span[contains(@class,'MuiCheckbox-root')]"));
+        Actions actions = new Actions(driver);
+
+        test.info("Number of checkboxes found: " + checkboxes.size());
+
+        for (int index : indexes) {
+            if (index <= 0 || index > checkboxes.size()) {
+                test.info("Index " + index + " out of bounds. Skipping.");
+                continue;
+            }
+
+            WebElement checkbox = checkboxes.get(index - 1);
+
+            String classes = checkbox.getAttribute("class");
+            if (!classes.contains("Mui-checked")) {
+                // Click via Actions to trigger React
+                actions.moveToElement(checkbox).click().perform();
+               test.info("Checkbox at index " + index + " clicked via Actions.");
+            } else {
+                test.info("Checkbox at index " + index + " already selected.");
+            }
         }
     }
 
-    public void DeleteBtn(){
-        wait.until(ExpectedConditions.elementToBeClickable(DeleteIcon)).click();
+    public void logSelectedRows(ExtentTest test) {
+        // Locate the confirmation table (3rd table as per your XPath)
+        WebElement confirmTable = driver.findElement(By.xpath("(//table[@class='MuiTable-root'])[3]"));
+
+        // Get all rows
+        List<WebElement> rows = confirmTable.findElements(By.tagName("tr"));
+
+        if (rows.size() <= 1) {
+            test.info("No rows found in confirmation popup.");
+            return;
+        }
+
+        test.info("Selected rows in confirmation popup:");
+
+        // Loop through rows (skip header row at index 0)
+        for (int i = 1; i < rows.size(); i++) {
+            List<WebElement> cells = rows.get(i).findElements(By.tagName("td"));
+
+            // Get TID, MID, SerialNo
+            String TID = cells.get(0).getText();
+            String MID = cells.get(1).getText();
+            String SerialNo = cells.get(2).getText();
+
+            // Log to ExtentTest
+            test.info("Row " + i + ": TID = " + TID + ", MID = " + MID + ", Serial No = " + SerialNo);
+        }
     }
 
+    public String getDeleteMessage() {
+        WebElement message = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("//div[@role='alert']")
+                )
+        );
+        return message.getText();
+    }
+    public void DeleteIconClick(){
+        wait.until(ExpectedConditions.elementToBeClickable(DeleteIcon)).click();
+    }
+    public void DeleteButton(){
+        wait.until(ExpectedConditions.elementToBeClickable(DeleteBtn)).click();
+    }
+    public void DeleteCancelBtn(){
+        wait.until(ExpectedConditions.elementToBeClickable(DeleteCancelBtn)).click();
+    }
     public boolean isVisibleBulkDeleteBtn(){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(DeleteIcon)).isDisplayed();
     }
+    public boolean isVisibleBulkDeleteForum(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(DeleteBtn)).isDisplayed();
+    }
+    public boolean isVisibleDeleteSuccessMsg(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(DeleteSuccessMsg)).isDisplayed();
+    }
 
 
+    private final By MerchantIcon = By.xpath("(//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12'])[4]");
+
+    public void MerchantNavigation(){
+        wait.until(ExpectedConditions.elementToBeClickable(AdministrationBtn)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(MerchantManagement)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(MerchantIcon)).click();
+    }
+
+    public void logSelectedRowsMerchant(ExtentTest test) {
+        // Locate the confirmation table (3rd table as per your XPath)
+        WebElement confirmTable = driver.findElement(By.xpath("(//table[@class='MuiTable-root'])[3]"));
+
+        // Get all rows
+        List<WebElement> rows = confirmTable.findElements(By.tagName("tr"));
+
+        if (rows.size() <= 1) {
+            test.info("No rows found in confirmation popup.");
+            return;
+        }
+
+        test.info("Selected rows in confirmation popup:");
+
+        // Loop through rows (skip header row at index 0)
+        for (int i = 1; i < rows.size(); i++) {
+            List<WebElement> cells = rows.get(i).findElements(By.tagName("td"));
+
+            // Get TID, MID, SerialNo
+            String MID = cells.get(0).getText();
+            String MerchantName = cells.get(1).getText();
+
+
+            // Log to ExtentTest
+            test.info("Row " + i + ": MID = " + MID + ", Merchant Name = " + MerchantName);
+        }
+    }
+    private final By EditIconMerchant = By.xpath("(//*[name()='svg'][@title='Edit'])[1]");
+
+    public boolean isVisibleEditIconMerchant(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(EditIconMerchant)).isDisplayed();
+    }
+
+
+    public void selectCheckboxes(ExtentTest test, int... indexes) {
+
+        List<WebElement> checkboxes = driver.findElements(
+                By.xpath("//input[@type='checkbox']")
+        );
+
+        Actions actions = new Actions(driver);
+
+        test.info("Checkbox count: " + checkboxes.size());
+
+        for (int index : indexes) {
+
+            if (index <= 0 || index > checkboxes.size()) {
+                test.info("Index " + index + " out of bounds");
+                continue;
+            }
+
+            WebElement checkbox = checkboxes.get(index - 1);
+
+            // Scroll into view
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].scrollIntoView({block:'center'});", checkbox);
+
+            // Wait a bit (important for React)
+            try { Thread.sleep(500); } catch (Exception e) {}
+
+            // Click using Actions (REAL user click)
+            actions.moveToElement(checkbox).click().perform();
+
+            test.info("Clicked checkbox index: " + index);
+        }
+    }
 }
